@@ -18,6 +18,7 @@ void setup() {
 }
 
 //big money
+//less money
 void loop() {
 
   while(!interruptFlag) //do nothing until interrupt
