@@ -27,6 +27,8 @@ void setup() {
 //    x = micros();
 //    h = micros();
 
+//small money 
+
 void loop() {
   //calculate voltages adcresult*3.3/2^12
 //  unsigned long interval = elapsedTime;
