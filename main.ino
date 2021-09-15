@@ -16,9 +16,32 @@ void loop() {
 ;
 }
 
+<<<<<<< HEAD
 void TC3_Handler()
 {
   TC_GetStatus(TC1, 0); // accept interrupt
   DACC->DACC_CDR = LUT[cycle];  // Start the next DAC conversion
   cycle++; //frequency is determined by FS * cycle_increment / 2048
+=======
+  while(!interruptFlag) //do nothing until interrupt
+  {
+    digitalWrite(13, 1); //best practice to do some NOOP task inside empty loop to avoid errors
+  }
+  
+  if(cycle > 2047) //to prevent overflow, reset the cycle counter
+  {
+    cycle = 0;
+  }
+  
+/* UNCOMMENT THIS CODE TO TEST NCO DIGITALLY
+  test (justin)
+  Serial.println(LUT[cycle]);
+*/
+
+  DacSample = LUT[cycle]; // push into DAC
+  DACC->DACC_CDR = DacSample;  // Start the next DAC conversion
+  cycle = cycle + cycle_incr; // increment cycle counter to fetch next value in LUT, the higher the increment value is, the higher the sine wave frequency
+
+  interruptFlag = false; // wait for next interrupt
+>>>>>>> 63cfe528ac0e1aea4ccf74c83d07ec6c98715a8f
 }

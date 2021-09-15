@@ -2,7 +2,6 @@
 
 class NCO
 {
-
 NCO(float frequency, float amplitude, Tc *tc, uint32_t tc_channel){
   for(int i=0; i < 2048; i++)
   {
