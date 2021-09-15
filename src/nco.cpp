@@ -1,7 +1,6 @@
-#include "..\inc\nco.h"
+#include "../inc/nco.h"
 
 uint32_t  DacSample;
-bool interruptFlag = false;
 unsigned int cycle = 0; // this counter determines the frequency of the waveform, user inputs desired frequency value and it is multiplexed into a positive integer
 
 void nco::DAC_Setup () {

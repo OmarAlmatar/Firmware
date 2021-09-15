@@ -1,8 +1,9 @@
 #include "inc/nco.h"
 #include "inc/rms.h"
 
+bool interruptFlag = false;
+
 void setup() {
-  
   Serial.begin(9600);
   nco::DAC_Setup();
   nco::startTimer(TC1, 0, TC3_IRQn, FS); // TC1 channel 0, the IRQ for that channel and the desired frequency

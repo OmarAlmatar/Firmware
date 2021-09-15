@@ -1,3 +1,6 @@
+#ifndef NCO_H_INCLUDED
+#define NCO_H_INCLUDED
+
 namespace nco {
     #define FS 44100    
     int LUT[2048];
@@ -5,3 +8,5 @@ namespace nco {
     void TC3_Handler();
     void startTimer(Tc *tc, uint32_t channel, IRQn_Type irq, uint32_t frequency);
 }
+
+#endif /* NCO_H_INCLUDED */
