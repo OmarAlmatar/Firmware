@@ -21,7 +21,7 @@ void loop() {
   }
   
 /* UNCOMMENT THIS CODE TO TEST NCO DIGITALLY
- 
+  test (justin)
   Serial.println(LUT[cycle]);
 */
 
