@@ -15,9 +15,9 @@ void loop() {
     digitalWrite(13, 1); //best practice to do some NOOP task inside empty loop to avoid errors
   }
   
-  while(cycle > 2047) //to prevent overflow, reset the cycle counter <- previously if(cycle > 2047){ reset cycle }. Uusing empty while loop to cut off waveform to test results
+  if(cycle > 2047) //to prevent overflow, reset the cycle counter
   {
-    digitalWrite(13, 0); //best practice to do some NOOP task inside empty loop to avoid errors
+    cycle = 0;
   }
   
 /* UNCOMMENT THIS CODE TO TEST NCO DIGITALLY
@@ -27,7 +27,7 @@ void loop() {
 
   DacSample = LUT[cycle]; // push into DAC
   DACC->DACC_CDR = DacSample;  // Start the next DAC conversion
-  cycle++; // increment cycle counter to fetch next value in LUT, the higher the increment value is, the higher the sine wave frequency, counter is incremented by its initial value, for example, iteration1: 2, iteration2: 2+2, iteration3: 4+2, etc.
+  cycle = cycle + cycle_incr; // increment cycle counter to fetch next value in LUT, the higher the increment value is, the higher the sine wave frequency
 
   interruptFlag = false; // wait for next interrupt
 }

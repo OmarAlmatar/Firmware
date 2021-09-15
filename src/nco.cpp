@@ -3,6 +3,7 @@
 uint32_t  DacSample;
 bool interruptFlag = false;
 unsigned int cycle = 0; // this counter determines the frequency of the waveform, user inputs desired frequency value and it is multiplexed into a positive integer
+unsigned int cycle_incr = 1; // this value is what the cycle counter is incremented by for the frequency
 
 void nco::DAC_Setup () {
   for(int i=0; i < 2048; i++)
