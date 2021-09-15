@@ -1,12 +1,24 @@
 #ifndef NCO_H_INCLUDED
 #define NCO_H_INCLUDED
 
-namespace nco {
-    #define FS 44100    
-    int LUT[2048];
-    void DAC_Setup();
-    void TC3_Handler();
-    void startTimer(Tc *tc, uint32_t channel, IRQn_Type irq, uint32_t frequency);
-}
+#define FC 44100
+class NCO {
+    private:
+        int LUT[2048];
+        float frequency, amplitude;             //frequency and amplitude of NCO
+        Tc *tc;
+        uint32_t tc_channel;
+        IRQn_Type irq;
+        void Timer_Setup();
+        void DAC_Setup();
+    public:
+        NCO(float frequency, float amplitude, Tc *tc, uint32_t tc_channel);
+        void setFrequency(int counterincrement);
+        void setAmplitude(int counterincrement);
+        float getFrequency();
+        float getAmplitude();
+        void startNCO();                        //starts the NCO oscillations
+        void stopNCO();                         //stops the NCO oscillations
+};
 
-#endif /* NCO_H_INCLUDED */
+#endif

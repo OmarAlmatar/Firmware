@@ -12,7 +12,6 @@ volatile unsigned long elapsedTime = 0;
 void setup() {
   Serial.begin(9600);
   startTimer(TC1, 0, TC3_IRQn, FS); //TC1 channel 0, the IRQ for that channel and the desired frequency
-  DacSetup();
   AdcSetup();
 //  for(int i = 0; i < 4400; i++)
 //  {
@@ -56,29 +55,9 @@ Serial.print("ADC Result in Voltage (DigitalValue * 3.3 / 4096): ");
 }
 void TC3_Handler()
 {
-//  static unsigned long previousTime = 0;
-//  unsigned long time = micros();
-//  elapsedTime = time - previousTime;
-//  previousTime = time;
-//  if(j == 0)
-//  {
-//    h = micros();
-//  }
   TC_GetStatus(TC1, 0);
   AdcResult = ADC->ADC_CDR[7];            // Read the previous result
-  ADC->ADC_CR |= ADC_CR_START;            // Begin the next ADC conversion. 
-  DACC->DACC_CDR = DacSample;  // Start the next DAC conversion
-//  arr2[j] = AdcResult;
-//  j++;
-//  if(j>4399)
-//  {
-//    j = 0;
-//    int f = micros();
-//    Serial.print("Buffer buildup time: ");
-//    Serial.println(f-h);
-//  }
-  DacSample = digital_sig;
-  
+  ADC->ADC_CR |= ADC_CR_START;            // Begin the next ADC conversion.   
 }
 
 void startTimer(Tc *tc, uint32_t channel, IRQn_Type irq, uint32_t frequency) {
@@ -92,19 +71,6 @@ void startTimer(Tc *tc, uint32_t channel, IRQn_Type irq, uint32_t frequency) {
   tc->TC_CHANNEL[channel].TC_IER=TC_IER_CPCS;
   tc->TC_CHANNEL[channel].TC_IDR=~TC_IER_CPCS;
   NVIC_EnableIRQ(irq);
-}
-
-void DacSetup () {
-  PIOB->PIO_PDR |= PIO_PDR_P15 | PIO_PDR_P16;  // Disable GPIO on corresponding pins DAC0 and DAC1
-  PMC->PMC_PCER1 |= PMC_PCER1_PID38 ;     // DACC power ON
-  DACC->DACC_CR = DACC_CR_SWRST ;         // reset DACC
-
-  DACC->DACC_MR = DACC_MR_REFRESH (1)
-                  | DACC_MR_STARTUP_0
-                  | DACC_MR_MAXS
-                  | DACC_MR_USER_SEL_CHANNEL1;
-
-  DACC->DACC_CHER =  DACC_CHER_CH1;      // enable DAC  channel 1
 }
 
 void AdcSetup(){ 
